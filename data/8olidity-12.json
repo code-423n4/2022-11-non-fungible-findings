@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "8olidity",
+  "risk": "3",
+  "title": "`updateDomainSeparator()` allows arbitrary users to call it",
+  "issueId": 12,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/12"
+}
