@@ -1,0 +1,3 @@
+Signature Malleability
+https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0777c8b12e800305d/contracts/Exchange.sol#L516-L530
+Current version of _verify allows a second signature that was computed from the first, legitimate one, pass the check. Despite this not introducing vulnerabilities, limiting S to 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5D576E7357A4501DDFE92F46681B20A0 is advised to avoid this.
