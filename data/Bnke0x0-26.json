@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "Bnke0x0",
+  "risk": "3",
+  "title": "ERC20 return values not checked",
+  "issueId": 26,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/26"
+}
