@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "Bnke0x0",
+  "risk": "2",
+  "title": "Order cancellation is prone to frontrunning and is dependent on a centralized database",
+  "issueId": 33,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/33"
+}
