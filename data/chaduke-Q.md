@@ -1,0 +1,2 @@
+QA1: https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0777c8b12e800305d/contracts/Exchange.sol#L112
+A zero-address check should be performed for each input address and a range check should be done for ``_blockrange``. Human input error can cause a disaster as some users might front-run transactions and take advantage of the chaos. A deployment is also costing and reputation-damaging.
