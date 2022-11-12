@@ -4,3 +4,13 @@ A zero-address check should be performed for each input address and a range chec
 QA2: https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0777c8b12e800305d/contracts/Pool.sol#L44-L50
 Although this function debits the balance before sending ETH to the msg.sender to prevent an reentrancy attack, it is still advised to use a Reengrancyguard (https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0777c8b12e800305d/contracts/Pool.sol#L44-L50) to protect it from a more sophisticated reentrancy attack. 
 
+QA3:        https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0777c8b12e800305d/contracts/Pool.sol#L49
+change it to
+```
+ emit Transfer(address(this), msg.sender, amount);
+```
+https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0777c8b12e800305d/contracts/Pool.sol#L37
+change it to
+```
+ emit Transfer(msg.sender, address(this), msg.value);
+```
