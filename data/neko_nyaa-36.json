@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "neko_nyaa",
+  "risk": "2",
+  "title": "`Pool.sol`: Wrong usage of Upgradeable pattern, causing loss of ownership",
+  "issueId": 36,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/36"
+}
