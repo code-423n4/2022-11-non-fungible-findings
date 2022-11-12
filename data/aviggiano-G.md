@@ -92,3 +92,50 @@ $ diff gas1 gas2
 ---
 > |  TestExchange                                ·          -  ·          -  ·    3512278  ·       11.7 %  ·          -  │
 ```
+
+# 3. Increment storage value in the same instruction as emitting event
+
+### Code changes
+
+```diff
+diff --git a/contracts/Exchange.sol b/contracts/Exchange.sol
+index ec27b1d..b2fa8e7 100644
+--- a/contracts/Exchange.sol
++++ b/contracts/Exchange.sol
+@@ -313,8 +313,7 @@ contract Exchange is IExchange, ReentrancyGuarded, EIP712, OwnableUpgradeable, U
+      * @dev Cancel all current orders for a user, preventing them from being matched. Must be called by the trader of the order
+      */
+     function incrementNonce() external {
+-        nonces[msg.sender] += 1;
+-        emit NonceIncremented(msg.sender, nonces[msg.sender]);
++        emit NonceIncremented(msg.sender, ++nonces[msg.sender]);
+     }
+ 
+```
+
+### Gas changes
+
+
+```
+# before changes
+$ yarn test > gas1
+
+# after changes
+$ yarn test > gas2
+
+# get gas changes
+$ diff gas1 gas2
+
+226c226
+< |  Exchange           ·  execute               ·     252299  ·     307525  ·     273464  ·           24  ·          -  │
+---
+> |  Exchange           ·  execute               ·     252299  ·     307542  ·     273469  ·           24  ·          -  │
+228c228
+< |  Exchange           ·  incrementNonce        ·      32939  ·      50039  ·      41489  ·            8  ·          -  │
+---
+> |  Exchange           ·  incrementNonce        ·      32740  ·      49840  ·      41290  ·            8  ·          -  │
+280c280
+< |  TestExchange                                ·          -  ·          -  ·    3514198  ·       11.7 %  ·          -  │
+---
+> |  TestExchange                                ·          -  ·          -  ·    3509234  ·       11.7 %  ·          -  │
+```
