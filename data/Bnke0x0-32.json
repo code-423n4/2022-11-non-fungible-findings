@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "Bnke0x0",
+  "risk": "2",
+  "title": "Seller and  Buyer's may accidentally overpay in buyOption() and the excess will be paid to the vault creator",
+  "issueId": 32,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/32"
+}
