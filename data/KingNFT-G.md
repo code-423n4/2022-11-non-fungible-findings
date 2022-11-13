@@ -3,7 +3,7 @@ https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0
 ```
 (1)
 0 => 1 :  cost 22100 gas
-1 => 0 :  refundable += 19900 gas, actual refund gas is based on whole TX, which is minOf(usdGasOfTx / 5, refundable)
+1 => 0 :  refundable += 19900 gas, actual refund gas is based on whole TX, which is minOf(usedGasOfTx / 5, refundable)
 0 => 1 => 0: net cost could be up to about 14000 gas
 
 (2)
