@@ -25,6 +25,12 @@ unchecked {
    remainingETH -= price; 
 }
 ```
+d: 
+https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0777c8b12e800305d/contracts/Exchange.sol#L607
+unchecked {
+  uint256 receiveAmount = price - totalFee;
+}
+
 G2. isInternal and remainingETH can be declared internal without initialization
 changing
 ```
