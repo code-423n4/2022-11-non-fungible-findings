@@ -11,8 +11,10 @@ function _execute(Input calldata sell, Input calldata buy)
 ```
 https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0777c8b12e800305d/contracts/Exchange.sol#L240
 
+
 [N-01] Declaration  of 'bulkExecute()' function has not been added to 'IExchange.sol'
 https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0777c8b12e800305d/contracts/interfaces/IExchange.sol#L36
+
 
 [N-02]  '_execute()' function allows trading with self
 https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0777c8b12e800305d/contracts/Exchange.sol#L234
