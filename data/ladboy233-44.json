@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "ladboy233",
+  "risk": "2",
+  "title": "Incorrect implementation of the Yui Assembly in Exchange.sol#_validateOracleAuthorization when decoding the signature.",
+  "issueId": 44,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/44"
+}
