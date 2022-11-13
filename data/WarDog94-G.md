@@ -1,3 +1,4 @@
+Description: The check was moved to a modifier and the redundant proxy function was eliminated along with the return that was always true.
 ```diff
 diff --git a/contracts/Exchange.sol b/contracts/Exchange.sol
 index ec27b1d..3135235 100644
