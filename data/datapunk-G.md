@@ -8,15 +8,13 @@ G1: in [_transfer](https://github.com/code-423n4/2022-11-non-fungible/blob/323b7
 ```
 can be replaced with
 ```
-        require(from != to, "ERC20: transfer from the zero address");
+        require(from != to, "ERC20: transfer to itself");
         require(to != address(0), "ERC20: transfer to the zero address");
 
         uint256 fromBalance = _balances[from];
         require(fromBalance >= amount, "ERC20: transfer amount exceeds balance");
         unchecked {
             _balances[from] = fromBalance - amount;
-            // Overflow not possible: the sum of all balances is capped by totalSupply, and the sum is preserved by
-            // decrementing then incrementing.
             _balances[to] += amount;
         }
 ```
