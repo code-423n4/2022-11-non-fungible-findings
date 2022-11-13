@@ -55,3 +55,11 @@ The compiler uses opcodes GT and ISZERO for solidity code that uses >, but only 
 https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0777c8b12e800305d/contracts/Exchange.sol#L275
 https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0777c8b12e800305d/contracts/Exchange.sol#L412
 ==========================================================
+
+Using > 0 costs more gas than != 0 when used on a uint in a require() statement
+This change saves 6 gas https://aws1.discourse-cdn.com/business6/uploads/zeppelin/original/2X/3/363a367d6d68851f27d2679d10706cd16d788b96.png per instance. The optimization works until solidity version 0.8.13 https://gist.github.com/IllIllI000/bf2c3120f24a69e489f12b3213c06c94 where there is a regression in gas costs.
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0777c8b12e800305d/contracts/Exchange.sol#L275
+https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0777c8b12e800305d/contracts/Exchange.sol#L412
+==========================================================
+
