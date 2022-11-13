@@ -27,3 +27,16 @@ modifier setupExecution() {
 ```
 The reason is same with [G-01].
 
+[G-03] Add unchecked {} for subtractions where the operands cannot underflow
+https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0777c8b12e800305d/contracts/Exchange.sol#L607
+
+
+[G-04] Use 'uint256' instead of 'uint8' as loop variable
+'uint8' has extra overhead than 'uint256'
+https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0777c8b12e800305d/contracts/Exchange.sol#L184
+https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0777c8b12e800305d/contracts/Exchange.sol#L308
+https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0777c8b12e800305d/contracts/Exchange.sol#L598
+
+[G-05] Public functions not called by the contract should be declared external
+https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0777c8b12e800305d/contracts/Pool.sol#L79
+https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0777c8b12e800305d/contracts/Pool.sol#L83
