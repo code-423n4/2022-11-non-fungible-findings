@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "yixxas",
+  "risk": "2",
+  "title": "`_executeFundsTransfer()` can be used to make an order using funds in the contract",
+  "issueId": 65,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/65"
+}
