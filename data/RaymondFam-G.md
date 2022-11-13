@@ -124,3 +124,65 @@ Here are the seven instances entailed:
 
 https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L56-L66
 https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L323-L352
+
+## State Variables Repeatedly Read Should be Cached
+SLOADs cost 100 gas each after the 1st one whereas MLOADs/MSTOREs only incur 3 gas each. As such, storage values read multiple times should be cached in the stack memory the first time (costing only 1 SLOAD) and then re-read from this cache to avoid multiple SLOADs.
+
+For instance, `policyManager` could  be cached in the instance below:
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L543-L551
+
+```
+        address _policyManager = policyManager;
+
+        if (sell.listingTime <= buy.listingTime) {
+            /* Seller is maker. */
+            require(_policyManager.isPolicyWhitelisted(sell.matchingPolicy), "Policy is not whitelisted");
+            (canMatch, price, tokenId, amount, assetType) = IMatchingPolicy(sell.matchingPolicy).canMatchMakerAsk(sell, buy);
+        } else {
+            /* Buyer is maker. */
+            require(_policyManager.isPolicyWhitelisted(buy.matchingPolicy), "Policy is not whitelisted");
+            (canMatch, price, tokenId, amount, assetType) = IMatchingPolicy(buy.matchingPolicy).canMatchMakerBid(buy, sell);
+        };
+```
+## Emitted Parameters
+Emit a local instead of a state variable whenever possible to save gas. Here are the four instances entailed:
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L323-L356
+
+```
+    function setExecutionDelegate(IExecutionDelegate _executionDelegate)
+        external
+        onlyOwner
+    {
+        require(address(_executionDelegate) != address(0), "Address cannot be zero");
+        executionDelegate = _executionDelegate;
+        emit NewExecutionDelegate(executionDelegate);
+    }
+
+    function setPolicyManager(IPolicyManager _policyManager)
+        external
+        onlyOwner
+    {
+        require(address(_policyManager) != address(0), "Address cannot be zero");
+        policyManager = _policyManager;
+        emit NewPolicyManager(policyManager);
+    }
+
+    function setOracle(address _oracle)
+        external
+        onlyOwner
+    {
+        require(_oracle != address(0), "Address cannot be zero");
+        oracle = _oracle;
+        emit NewOracle(oracle);
+    }
+
+    function setBlockRange(uint256 _blockRange)
+        external
+        onlyOwner
+    {
+        blockRange = _blockRange;
+        emit NewBlockRange(blockRange);
+    }
+```
