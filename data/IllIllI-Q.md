@@ -5,8 +5,9 @@
 |-|:-|:-:|
 | [L&#x2011;01] | Upgradeable contract not initialized | 3 |
 | [L&#x2011;02] | Open TODOs | 1 |
+| [L&#x2011;03] | Vulnerable to cross-chain replay attacks due to `DOMAIN_SEPARATOR` never changing | 1 |
 
-Total: 4 instances over 2 issues
+Total: 5 instances over 3 issues
 
 ### Non-critical Issues
 | |Issue|Instances|
@@ -57,6 +58,37 @@ File: contracts/Pool.sol
 
 ```
 https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0777c8b12e800305d/contracts/Pool.sol#L18
+
+### [L&#x2011;03]  Vulnerable to cross-chain replay attacks due to `DOMAIN_SEPARATOR` never changing
+See [this](https://github.com/code-423n4/2021-04-maple-findings/issues/2) issue from a prior contest for details
+
+*There is 1 instance of this issue:*
+```solidity
+// File: contracts/Exchange.sol
+
+112        function initialize(
+113            IExecutionDelegate _executionDelegate,
+114            IPolicyManager _policyManager,
+115            address _oracle,
+116            uint _blockRange
+117        ) external initializer {
+118            __Ownable_init();
+119            isOpen = 1;
+120    
+121 @>         DOMAIN_SEPARATOR = _hashDomain(EIP712Domain({
+122                name              : NAME,
+123                version           : VERSION,
+124                chainId           : block.chainid,
+125                verifyingContract : address(this)
+126            }));
+127    
+128            executionDelegate = _executionDelegate;
+129            policyManager = _policyManager;
+130            oracle = _oracle;
+131:           blockRange = _blockRange;
+```
+https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0777c8b12e800305d/contracts/Exchange.sol#L112-L131
+
 
 ## Non-critical Issues
 
