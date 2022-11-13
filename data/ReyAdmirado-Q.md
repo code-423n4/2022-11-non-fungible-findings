@@ -9,6 +9,7 @@
 | 4 | [open todos](#) |
 | 5 | [Code Structure Deviates From Best-Practice](#) |
 | 6 | [Constant redefined elsewhere](#) |
+| 7 | [require()/revert() statements should have descriptive reason strings or custom error](#7-requirerevert-statements-should-have-descriptive-reason-strings-or-custom-error) |
 
 
 ## 1. event is missing indexed fields
@@ -51,3 +52,15 @@ https://medium.com/coinmonks/gas-cost-of-solidity-library-functions-dbe0cedd4678
 - [Exchange.sol#L70-L74](https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L71-L74)
 
 - [Pool.sol#L17-19](https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Pool.sol#L17-19)
+
+
+## 7. require()/revert() statements should have descriptive reason strings or custom error
+
+- [Exchange.sol#L240](https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L240)
+- [Exchange.sol#L291](https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L291)
+- [Exchange.sol#L573](https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L573)
+
+- [Pool.sol#L45](https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Pool.sol#L45)
+- [Pool.sol#L48](https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Pool.sol#L48)
+- [Pool.sol#L71](https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Pool.sol#L71)
+- [Pool.sol#L72](https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Pool.sol#L72)
