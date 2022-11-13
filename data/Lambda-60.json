@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "Lambda",
+  "risk": "2",
+  "title": "internalCall modifier can be circumvented with execute / bulkExecute",
+  "issueId": 60,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/60"
+}
