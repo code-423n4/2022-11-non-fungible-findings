@@ -223,3 +223,9 @@ File: contracts/Exchange.sol
 File: contracts/Exchange.sol
 350:     function setBlockRange(uint256 _blockRange)
 ```
+
+# Remove updateDomainSeparator function
+The function updateDomainSeparator() in Exchange.sol can be removed. It's not needed by any tests at the moment and they run without it.
+File: contracts/Exchange.sol
+134:     // temporary function for testing
+135:     function updateDomainSeparator() external {
