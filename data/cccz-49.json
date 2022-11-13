@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "cccz",
+  "risk": "2",
+  "title": "When the user is a smart contract, the user may not be able to withdraw ETH through the withdraw function",
+  "issueId": 49,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/49"
+}
