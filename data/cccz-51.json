@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "cccz",
+  "risk": "2",
+  "title": "order.expirationTime == 0 fails in the check of _validateOrderParameters",
+  "issueId": 51,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/51"
+}
