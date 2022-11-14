@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "adriro",
+  "risk": "3",
+  "title": "ETH payments may fail to be refunded and will be lost in the Exchange contract",
+  "issueId": 169,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/169"
+}
