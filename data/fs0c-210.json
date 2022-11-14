@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "fs0c",
+  "risk": "3",
+  "title": "[H-01] `owner` not set in Pool.sol",
+  "issueId": 210,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/210"
+}
