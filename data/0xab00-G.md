@@ -28,14 +28,7 @@ can be changed to
 for a minor gas savings. 
 (26 gas)
 
--------------------------
-
-
-# Exchange.sol _returnDust() - can pop() instead of storing to result variable for minor gas saving
-(same as above, but in a different file)
-The `let callStatus` variable is not used.
-Either: `pop(call(...))` for a gas savings
-
+Can also do this for `Exchange.sol`'s `_returnDust()` function (with `callStatus`).
 Minor QA issue in this function too: function does not check the successful status of the call().
 
 
@@ -44,7 +37,7 @@ Minor QA issue in this function too: function does not check the successful stat
 Can cache `nonces[msg.sender]` to save gas.
 
 Current implementation costs 52156 gas the first time, and 32491 for subsequent calls.
-If changed, it can cost 52041 first call, and 32376 for all calls after that
+If changed, it can cost 52041 first call (saving 115 gas),  and 32376 (again saving 115 gas) for all calls after that
 
 ```
     function incrementNonce() external {
@@ -58,17 +51,17 @@ If changed, it can cost 52041 first call, and 32376 for all calls after that
 
 
 ------------------------
-# Exchange.sol - save gas by sending event arguments from calldata instead of storage
+# Exchange.sol - save gas by sending event arguments from calldata instead of the newly set storage value
 
-Can save 157 gas by avoiding reading from storage by changing last line in the function to `emit NewExecutionDelegate(executionDelegate)` instead of using the `executionDelegate` from storage.
+Can save 157 gas by avoiding reading from storage by changing last line in the function to `emit NewExecutionDelegate(_executionDelegate)` instead of using the `executionDelegate` from storage.
 
 The previous line writes to storage, so the data is the same (just cheaper to read from call data)
 
-This can also be applied to `setPolicyManager()`, `setOracle()`, `setBlockRange()`` which all read from storage when emitting events instead of just emitting the calldata variable (cheaper to read from).
+This can also be applied to `setPolicyManager()`, `setOracle()`, `setBlockRange()`` which all read from storage when emitting events instead of just emitting the calldata variable (cheaper to read from). I won't repeat it 3 times as the change is easy to see.
 
 
 
 ------------------
 # Exchange.sol _executeFundsTransfer - wrap in unchecked{} to save gas
-`remainingETH -= price;` can be safely wrapped in `unchecked { ... }`, due to the assetion in the previous line 
+`remainingETH -= price;` can be safely wrapped in `unchecked { ... }`, due to the assertion in the previous line 
 
