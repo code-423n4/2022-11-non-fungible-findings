@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "Sathish9098",
+  "risk": "2",
+  "title": "THE RETURN STATEEMENT OF THE transferFrom FUNCTION ALWAYS RETURN TRUE EVEN THE TRANSFER IS FAILED . IF RETURN TRUE FOR ALL TRANSACTIONS IT WILL CAUSE A PROBLEM AND LOSE OF AMOUNT",
+  "issueId": 245,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/245"
+}
