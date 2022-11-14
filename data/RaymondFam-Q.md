@@ -160,3 +160,14 @@ It is a good practice to give time for users to react and adjust to critical cha
 Consider extending the timelock feature beyond contract ownership management to business critical functions. Here are some of the instances entailed:
 
 https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L323-L356
+
+## Open TODOs
+Open TODOs can point to architecture or programming issues that still need to be resolved. Consider resolving them before deploying.
+
+Here is one of the instances entailed:
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Pool.sol#L18
+
+```
+    // TODO: set proper address before deployment
+```
