@@ -291,7 +291,7 @@ https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.
     }
 ```
 
-## Emitted Parameters
+## Emitted Parameters Using Local Variables Saves Gas
 Emit a local instead of a state variable whenever possible to save gas. Here are the four instances entailed:
 
 https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L323-L356
@@ -426,3 +426,28 @@ All other instances entailed:
 
 https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L543-L551
 
+## `uint256` Can be Cheaper Than `uint8` and Other Unsigned Integer Type of Smaller Bit Size
+When dealing with function arguments or memory values, there is no inherent benefit because the compiler does not pack these values. Your contract’s gas usage may be higher because the EVM operates on 32 bytes at a time. Therefore, if the element is smaller than that, the EVM must use more operations in order to reduce the size of the element from 32 bytes to the desired size. The EVM needs to properly enforce the limits of this smaller type.
+
+It is only more efficient when you can pack variables of uint8, uint16, uint32, uint64, ... into the same storage slot with other neighboring variables smaller than 32 bytes. Here are some of the instances entailed:
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L184
+
+```
+        for (uint8 i = 0; i < executionsLength; i++) {
+```
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L307
+
+```
+        for (uint8 i = 0; i < orders.length; i++) {
+```
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L598
+
+```
+        for (uint8 i = 0; i < fees.length; i++) {
+```
+All other instances entailed:
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L443
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L479
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L519
