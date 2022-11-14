@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "saian",
+  "risk": "2",
+  "title": "`_returnDust` does not revert ether transfer failure",
+  "issueId": 206,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/206"
+}
