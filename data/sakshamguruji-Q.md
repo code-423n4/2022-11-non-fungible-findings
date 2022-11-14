@@ -33,6 +33,12 @@ https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.
 In the initialize function there is no 0 address check on the value of `_oracle` address , if accidentally set to 0 address it may force the protocol to be 
 redeployed i.e. a faulty deployment. 
 https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L115
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L566
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L567
+
+Remediation:
+
+
 Introduce a 0 check here.
 
 ## LINE TOO LONG
