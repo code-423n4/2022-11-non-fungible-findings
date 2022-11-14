@@ -262,4 +262,11 @@ Here is one instance found.
             }
         }
 ```
+## MSG.SENDER WITH MULTIPLE ADDRESSES
+In `transferFrom()` of `Pool.sol`, the if statement is comparing `msg.sender` with `EXCHANGE` and `SWAP` whose addresses have been set to the same address. However, this will make the function call always reverting when both `EXCHANGE` and `SWAP` are assigned a different address as indicated in the [TODO](https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Pool.sol#L18).
 
+[Pool.sol#L62](https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Pool.sol#L62) should therefore be refactored as follows by having `&&` replaced with `||`:
+
+```
+        if (msg.sender != EXCHANGE || msg.sender != SWAP) {
+```
