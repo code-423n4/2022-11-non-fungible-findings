@@ -28,6 +28,11 @@ Recommendation, add event emmision to track delegate call output on [Exchange.so
 
 You also may reconsider this pattern... if a delegatecall fails, why you wouldnt want to revert the whole transaction?
 
+### Open access on function `Exchange::_execute`
+It seems that `_execute` function its meant to be executed only internally, if so, why would you have a `public` modifier? lines [Exchange.sol#L235](https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0777c8b12e800305d/contracts/Exchange.sol#L235)
+
+Mark this function as internal or private.
+
 
 ## Non critical
 
