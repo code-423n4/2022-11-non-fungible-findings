@@ -79,6 +79,82 @@ FILE:  2022-11-non-fungible/contracts/Exchange.sol
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-6)  
+6)  When ever we are using IF ELSEIF condition checks we always need to define the DEFAULT ELSE block. if both IF and ELSEIF condition fails the default else block is executed . This is the best code practice 
+
+FILE:  2022-11-non-fungible/contracts/Exchange.sol
+
+function _validateUserAuthorization(  
+        bytes32 orderHash,
+        address trader,
+        uint8 v, 
+        bytes32 r,
+        bytes32 s,
+        SignatureVersion signatureVersion,
+        bytes calldata extraSignature
+    ) internal view returns (bool) {  
+        bytes32 hashToSign;
+        if (signatureVersion == SignatureVersion.Single) {
+            /* Single-listing authentication: Order signed by trader */
+            hashToSign = _hashToSign(orderHash);
+        } else if (signatureVersion == SignatureVersion.Bulk) {
+            /* Bulk-listing authentication: Merkle root of orders signed by trader */
+            (bytes32[] memory merklePath) = abi.decode(extraSignature, (bytes32[])); //CODE QUALITY SIVIYARITY FINDINGS 
+
+            bytes32 computedRoot = MerkleVerifier._computeRoot(orderHash, merklePath);
+            hashToSign = _hashToSignRoot(computedRoot);
+        }
+
+        return _verify(trader, hashToSign, v, r, s);
+    }
 
 
+
+
+function _validateOracleAuthorization(
+        bytes32 orderHash,
+        SignatureVersion signatureVersion,
+        bytes calldata extraSignature,
+        uint256 blockNumber
+    ) internal view returns (bool) { 
+        bytes32 oracleHash = _hashToSignOracle(orderHash, blockNumber);
+
+        uint8 v; bytes32 r; bytes32 s; 
+        if (signatureVersion == SignatureVersion.Single) { 
+            assembly {
+                v := calldataload(extraSignature.offset)
+                r := calldataload(add(extraSignature.offset, 0x20))
+                s := calldataload(add(extraSignature.offset, 0x40))
+            }
+            /*
+            REFERENCE
+            (v, r, s) = abi.decode(extraSignature, (uint8, bytes32, bytes32));
+            */
+        } else if (signatureVersion == SignatureVersion.Bulk) {
+            /* If the signature was a bulk listing the merkle path must be unpacked before the oracle signature. */
+            assembly {
+                v := calldataload(add(extraSignature.offset, 0x20))
+                r := calldataload(add(extraSignature.offset, 0x40))
+                s := calldataload(add(extraSignature.offset, 0x60))
+            } // WHEN EVER IF ELSE IF ALWAYS WE NEED TO DEFINE THE DEFAULT BLCOK  
+            /*
+            REFERENCE
+            uint8 _v, bytes32 _r, bytes32 _s;
+            (bytes32[] memory merklePath, uint8 _v, bytes32 _r, bytes32 _s) = abi.decode(extraSignature, (bytes32[], uint8, bytes32, bytes32));
+            v = _v; r = _r; s = _s;
+            */
+        }
+
+        return _verify(oracle, oracleHash, v, r, s);
+    }
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+7)             It is bad practice to use numbers directly in code without explanation.
+
+FILE:  2022-11-non-fungible/contracts/Exchange.sol
+
+521:      require(v == 27 || v == 28, "Invalid v parameter"); 
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+8)  
