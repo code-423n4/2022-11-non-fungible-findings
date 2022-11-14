@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "Deivitto",
+  "risk": "3",
+  "title": "`Exchange.sol` has payable functions but no way of withdrawing",
+  "issueId": 234,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/234"
+}
