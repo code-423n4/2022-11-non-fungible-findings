@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "0xDecorativePineapple",
+  "risk": "2",
+  "title": "Tokens transfers do not verify that the tokens were successfully transferred",
+  "issueId": 187,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/187"
+}
