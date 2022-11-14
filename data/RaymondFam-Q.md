@@ -72,5 +72,10 @@ https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.
 ```
         for (uint8 i = 0; i < fees.length; i++) {
 ```
-
 Consider bounding the loop where possible to avoid unnecessary gas wastage and denial of service.
+
+## Lines Too Long
+Lines in source code are typically limited to 80 characters, but it’s reasonable to stretch beyond this limit when need be as monitor screens theses days are comparatively larger. Considering the files will most likely reside in GitHub that will have a scroll bar automatically kick in when the length is over 164 characters, all code lines and comments should be split when/before hitting this length. Keep line width to max 120 characters for better readability where possible. Here are some of the instances entailed:
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L230
+
