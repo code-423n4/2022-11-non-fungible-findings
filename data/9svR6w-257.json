@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "9svR6w",
+  "risk": "2",
+  "title": "Counterparty-exchange owner may alter policy manager in execution callback, altering the price of subsequent order matching",
+  "issueId": 257,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/257"
+}
