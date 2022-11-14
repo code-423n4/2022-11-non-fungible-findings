@@ -153,6 +153,8 @@ https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.
 ```
 Line 56    function open() external onlyOwner {
 
+Line 60    function close() external onlyOwner {
+
 Line 66    function _authorizeUpgrade(address) internal override onlyOwner {}
 ```
 https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L323-L352
@@ -165,12 +167,19 @@ Line 325        onlyOwner
 Line 332    function setPolicyManager(IPolicyManager _policyManager)
 Line 333        external
 Line 334        onlyOwner
+
+Line 341    function setOracle(address _oracle)
+Line 342        external
+Line 343        onlyOwner
+
+Line 350    function setBlockRange(uint256 _blockRange)
+Line 351        external
+Line 352        onlyOwner
 ```
-
 ## State Variables Repeatedly Read Should be Cached
-SLOADs cost 100 gas each after the 1st one whereas MLOADs/MSTOREs only incur 3 gas each. As such, storage values read multiple times should be cached in the stack memory the first time (costing only 1 SLOAD) and then re-read from this cache to avoid multiple SLOADs.
+SLOADs cost 100 gas each after the 1st one whereas MLOADs/MSTOREs only incur 3 gas each. As such, storage values read multiple times should be cached in the stack memory the first time (costing only 1 SLOAD) and then re-read from this cache to avoid multiple SLOADs. There are four instances entailed.
 
-For instance, `policyManager` could  be cached in the instance below:
+`policyManager` in the instance below should be cached as follows:
 
 https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L543-L551
 
@@ -187,6 +196,101 @@ https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.
             (canMatch, price, tokenId, amount, assetType) = IMatchingPolicy(buy.matchingPolicy).canMatchMakerBid(buy, sell);
         };
 ```
+`cancelledOrFilled` in the instance below should be cached as follows:
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L295-L298
+
+```
+        bool _cancelledOrFilled[hash] = cancelledOrFilled[hash];
+
+        require(!_cancelledOrFilled[hash], "Order already cancelled or filled");
+
+        /* Mark order as cancelled, preventing it from being matched. */
+        _cancelledOrFilled[hash] = true;
+```
+`nonces` in the instance below should be cached as follows:
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L315-L318
+
+```
+    function incrementNonce() external {
+        uint256 _nonces[msg.sender] = nonces[msg.sender];
+
+        _nonces[msg.sender] += 1;
+        emit NonceIncremented(msg.sender, _nonces[msg.sender]);
+    }
+```
+`isInternal` in the instance below should be cached as follows:
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L40-L46
+
+```
+    modifier setupExecution() {
+        bool _isInternal = isInternal;
+
+        remainingETH = msg.value;
+        _isInternal = true;
+        _;
+        remainingETH = 0;
+        _isInternal = false;
+    }
+```
+`remainingETH` in the instance below should be cached as follows:
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L572-L575
+
+```
+        uint256 _remainingETH = remainingETH;
+
+        if (msg.sender == buyer && paymentToken == address(0)) {
+            require(_remainingETH >= price);
+            _remainingETH -= price;
+        }
+```
+`_balances` in the two instances below should be cached as follows:
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Pool.sol#L45-L46
+
+```
+        uint256 balances[msg.sender] = _balances[msg.sender];
+
+        require(balances[msg.sender] >= amount);
+        balances[msg.sender] -= amount;
+```
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Pool.sol#L71-L74
+
+```
+        uint256 balances[msg.sender] = _balances[msg.sender];
+
+        require(balances[from] >= amount);
+        require(to != address(0));
+        balances[from] -= amount;
+        balances[to] += amount;
+```
+## Unneeded State Variable Cache
+The following instance of state variable cache is unnecessary since `remainingETH` is only referenced once in the function call.
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L213
+
+```
+    function _returnDust() private {
+        uint256 _remainingETH = remainingETH;
+        assembly {
+            if gt(_remainingETH, 0) {
+                let callStatus := call(
+                    gas(),
+                    caller(),
+                    selfbalance(),
+                    0,
+                    0,
+                    0,
+                    0
+                )
+            }
+        }
+    }
+```
+
 ## Emitted Parameters
 Emit a local instead of a state variable whenever possible to save gas. Here are the four instances entailed:
 
@@ -265,3 +369,60 @@ https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.
 ```
         require(totalFee < price + 1, "Total amount of fees are more than the price");
 ```
+## Use of Named Returns for Local Variables Saves Gas
+You can have further advantages in term of gas cost by simply using named return values as temporary local variable. 
+
+As an example, the following code block can be refactored as follows:
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L591-L609
+
+```
+    function _transferFees(
+        Fee[] calldata fees,
+        address paymentToken,
+        address from,
+        uint256 price
+    ) internal returns (uint256 receiveAmount) {
+        uint256 totalFee = 0;
+        for (uint8 i = 0; i < fees.length; i++) {
+            uint256 fee = (price * fees[i].rate) / INVERSE_BASIS_POINT;
+            _transferTo(paymentToken, from, fees[i].recipient, fee);
+            totalFee += fee;
+        }
+
+        require(totalFee <= price, "Total amount of fees are more than the price");
+
+        /* Amount that will be received by seller. */
+        receiveAmount = price - totalFee;
+    }
+```
+
+All other instances entailed:
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L369
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L390
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L448
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L476
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L522
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L540
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Pool.sol#L60
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Pool.sol#L79-L83
+
+## Ternary Over `if ... else`
+Using ternary operator instead of the if else statement saves gas. For instance the following code block may be rewritten as:
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L525-L529
+
+```
+    recoveredSigner == address(0)
+        ? {
+            return false;
+        }
+        : {
+           return signer == recoveredSigner;
+        }
+```
+All other instances entailed:
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L543-L551
+
