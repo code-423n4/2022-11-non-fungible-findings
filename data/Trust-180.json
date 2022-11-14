@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "Trust",
+  "risk": "2",
+  "title": "Current code will not deploy successfully without refactoring",
+  "issueId": 180,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/180"
+}
