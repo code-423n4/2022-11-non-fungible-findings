@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "Chom",
+  "risk": "2",
+  "title": "bulkExecute doesn't revert if there are failed executions",
+  "issueId": 154,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/154"
+}
