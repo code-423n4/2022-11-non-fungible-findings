@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "0xdeadbeef0x",
+  "risk": "2",
+  "title": "Multisig wallets cannot use the platform",
+  "issueId": 145,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/145"
+}
