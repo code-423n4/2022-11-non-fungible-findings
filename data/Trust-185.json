@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "Trust",
+  "risk": "2",
+  "title": "Potential ETH leak of value when execute() is called from a contract ",
+  "issueId": 185,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/185"
+}
