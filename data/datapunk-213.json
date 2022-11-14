@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "datapunk",
+  "risk": "2",
+  "title": "unconventional reentrant structure can result in reentrance into _returnDust",
+  "issueId": 213,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/213"
+}
