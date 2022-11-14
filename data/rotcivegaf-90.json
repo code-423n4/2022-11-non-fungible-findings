@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "rotcivegaf",
+  "risk": "2",
+  "title": "Yul `call` return value not checked",
+  "issueId": 90,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/90"
+}
