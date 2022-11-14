@@ -86,6 +86,19 @@ File: contracts/Exchange.sol
 317:         emit NonceIncremented(msg.sender, nonces[msg.sender]);
 318:     }
 
+File: contracts/Exchange.sol
+183:         uint256 executionsLength = executions.length;
+184:         for (uint8 i = 0; i < executionsLength; i++) { // move the i++ inside the function in an unchecked block
+
+File: contracts/Exchange.sol
+305:     function cancelOrders(Order[] calldata orders) external {
+306:         for (uint8 i = 0; i < orders.length; i++) { // move the i++ inside the function in an unchecked block
+
+File: contracts/Exchange.sol
+597:         uint256 totalFee = 0;
+598:         for (uint8 i = 0; i < fees.length; i++) { // move the i++ inside the function in an unchecked block
+
+
 ```
 
 # revert with a custom Error (also mentioned in qa)
@@ -203,17 +216,19 @@ Here is the difference for REPORT_GAS=true hardhat test from a fresh clone to ho
  |  ERC20              ·  transferFrom          ·      51832  ·      51844  ·      51838  ·           10  ·          -  │
  ······················|························|·············|·············|·············|···············|··············
 -|  Exchange           ·  bulkExecute           ·     796257  ·     902099  ·     852656  ·            6  ·          -  │
-+|  Exchange           ·  bulkExecute           ·     795929  ·     901689  ·     852301  ·            6  ·          -  │
++|  Exchange           ·  bulkExecute           ·     795157  ·     900832  ·     851501  ·            6  ·          -  │
  ······················|························|·············|·············|·············|···············|··············
- |  Exchange           ·  cancelOrder           ·      61198  ·      61365  ·      61324  ·            7  ·          -  │
+ -|  Exchange           ·  cancelOrder           ·      61198  ·      61365  ·      61324  ·            7  ·          -  │
+ +|  Exchange           ·  cancelOrder           ·      61176  ·      61343  ·      61302  ·            7  ·          -  │
  ······················|························|·············|·············|·············|···············|··············
- |  Exchange           ·  cancelOrders          ·          -  ·          -  ·      95362  ·            1  ·          -  │
+ -|  Exchange           ·  cancelOrders          ·          -  ·          -  ·      95362  ·            1  ·          -  │
+ +|  Exchange           ·  cancelOrders          ·          -  ·          -  ·      95221  ·            1  ·          -  │
  ······················|························|·············|·············|·············|···············|··············
 -|  Exchange           ·  close                 ·          -  ·          -  ·      29320  ·            3  ·          -  │
 +|  Exchange           ·  close                 ·          -  ·          -  ·      34093  ·            3  ·          -  │
  ······················|························|·············|·············|·············|···············|··············
 -|  Exchange           ·  execute               ·     252299  ·     307542  ·     273467  ·           24  ·          -  │
-+|  Exchange           ·  execute               ·     252233  ·     307013  ·     273115  ·           24  ·          -  │
++|  Exchange           ·  execute               ·     252184  ·     306985  ·     273054  ·           24  ·          -  │
  ······················|························|·············|·············|·············|···············|··············
 -|  Exchange           ·  incrementNonce        ·      32939  ·      50039  ·      41489  ·            8  ·          -  │
 +|  Exchange           ·  incrementNonce        ·      32686  ·      49786  ·      41236  ·            8  ·          -  │
@@ -231,7 +246,7 @@ Here is the difference for REPORT_GAS=true hardhat test from a fresh clone to ho
 +|  Exchange           ·  setOracle             ·          -  ·          -  ·      32284  ·            1  ·          -  │
  ······················|························|·············|·············|·············|···············|··············
 -|  Exchange           ·  setPolicyManager      ·          -  ·          -  ·      35129  ·            1  ·          -  │
-+|  Exchange           ·  setPolicyManager      ·          -  ·          -  ·      35031  ·            1  ·          -  │
++|  Exchange           ·  setPolicyManager      ·          -  ·          -  ·      35009  ·            1  ·          -  │
  ······················|························|·············|·············|·············|···············|··············
  |  ExecutionDelegate  ·  approveContract       ·      47179  ·      47263  ·      47223  ·           21  ·          -  │
  ······················|························|·············|·············|·············|···············|··············
@@ -257,6 +272,6 @@ Here is the difference for REPORT_GAS=true hardhat test from a fresh clone to ho
  |  StandardPolicyERC721                        ·          -  ·          -  ·     219482  ·        0.7 %  ·          -  │
  ···············································|·············|·············|·············|···············|··············
 -|  TestExchange                                ·          -  ·          -  ·    3514198  ·       11.7 %  ·          -  │
-+|  TestExchange                                ·          -  ·          -  ·    3481146  ·       11.6 %  ·          -  │
++|  TestExchange                                ·          -  ·          -  ·    3440767  ·       11.5 %  ·          -  │
  ·----------------------------------------------|-------------|-------------|-------------|---------------|-------------·
 ```
