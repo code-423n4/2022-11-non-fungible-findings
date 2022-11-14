@@ -50,3 +50,13 @@ Comments line too long may reduce the readability of the code . The comments sho
 Affected Code:
 
 https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L230
+
+## VIOLATION OF CHECKS EFFECTS INTERACTION PATTERN
+
+###  Description:
+
+There was an instance in the codebase where the Checks Effects Interaction pattern was violated . This pattern should always be adhered.
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L599-L601
+
+Here , the totalFee should be updated after the _transferTo
