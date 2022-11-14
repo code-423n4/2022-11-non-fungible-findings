@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "adriro",
+  "risk": "2",
+  "title": "Cached EIP-712 domain separator may lead to replay attacks",
+  "issueId": 173,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/173"
+}
