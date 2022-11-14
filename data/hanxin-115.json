@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "hanxin",
+  "risk": "3",
+  "title": "Infinite loop caused by uint8 overflow",
+  "issueId": 115,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/115"
+}
