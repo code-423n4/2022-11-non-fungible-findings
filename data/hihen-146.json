@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "hihen",
+  "risk": "3",
+  "title": "User funds(ETHs) sent along with bulkExecute tx may be stolen by a reentry attack",
+  "issueId": 146,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/146"
+}
