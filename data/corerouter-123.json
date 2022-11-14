@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "corerouter",
+  "risk": "2",
+  "title": "it is possible that a user's ETH is trapped inside the contract.",
+  "issueId": 123,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/123"
+}
