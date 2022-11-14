@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "9svR6w",
+  "risk": "3",
+  "title": "Exchange's _returnDust() does not validate return value of call() to send excess ETH to sender.",
+  "issueId": 232,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/232"
+}
