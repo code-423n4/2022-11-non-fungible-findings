@@ -82,6 +82,8 @@ Missing `* @param amount`:
 ## SANITY CHECKS
 Zero address and zero value checks implemented at `initialize()` of `Exchange.sol` could avoid human errors leading to non-functional calls associated with the mistakes. This is especially so when the incidents entail `initializer()` preventing the function from getting re-initialized despite all mistakes could always be remedied via the setter functions.
 
+Additionally, it is also recommended adding an optional codehash check for addresses since the zero address check cannot guarantee a matching address has been inputted. Similarly, threshold limits should also be implemented along with zero value check to constitute a more robust engineering design. 
+
 ## DOS ON UNBOUNDED LOOP
 Unbounded loop could lead to OOG (Out of Gas) denying the users' of needed services. It is recommended setting a threshold for the array length if the array could grow to or entail an excessive size. Here are the three instances found.
 
@@ -179,3 +181,85 @@ Here are the three instances found.
 ```
         isOpen = 0;
 ```
+## USE UINT256 INSTEAD OF 'UINT`
+For explicitness reason, it is recommended replacing all instances of `uint` with `uint256`. 
+
+Here is one instance of `uint` used in the code base.
+
+[Exchange.sol#L116](https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L116)
+
+```
+        uint _blockRange
+```
+## USE BYTES32 INSTEAD OF 'BYTES`
+For explicitness reason, it is recommended replacing all instances of `bytes` with `bytes32`. 
+
+Here is one instance of `bytes` used in the code base.
+
+[Exchange.sol#L447](https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L447)
+
+```
+        bytes calldata extraSignature
+```
+## COMPREHENSIVE ZERO ADDRESS CHECK
+`_transferTo()` in `Exhange.sol` should have its zero address check move above the if statement on line 628. Doing this will have the check taken care of for all three payment options in the function logic.
+
+Here is the instance found.
+
+[Exchange.sol#L630](https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L630)
+
+```
+            require(to != address(0), "Transfer to zero address");
+```
+## TODO
+Open TODO signifies an architecture or programming issue needing to be resolved. It is recommended resolving them before deploying.
+
+Here is one instance found.
+
+[Pool.sol#L18](https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Pool.sol#L18)
+
+```
+    // TODO: set proper address before deployment
+```
+## COMMENT AND CODE MISMATCH
+The comment instance below stated `Assert`. However, a `require` statement was used in the code line instead.
+
+[Exchange.sol#L290-L291](https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L290-L291)
+
+```
+        /* Assert sender is authorized to cancel order. */
+        require(msg.sender == order.trader);
+```
+## COMMENTED CODE LINES
+Code base with lines of code commented out with `//` can lead to confusion and is detrimental to overall code readability. Consider removing commented out lines of code that are no longer needed. 
+
+Here is an instance found.
+
+[Exchange.sol#L282](https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L282)
+
+```
+        // return (price);
+```
+## UNCOMMENTED ASSEMBLY BLOCK
+Assembly is a low-level language that is harder to parse by readers, consider including extensive documentation regarding the rationale behind its use, clearly explaining what every single assembly instruction does. This will make it easier for users to trust the code, for reviewers to verify it, and for developers to build on top of it or update it. Note that the use of assembly discards several important safety features of Solidity, which may render the code unsafer and more error-prone. 
+
+Here is one instance found.
+
+[Exchange.sol#L214-L226](https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L214-L226)
+
+```
+        assembly {
+            if gt(_remainingETH, 0) {
+                let callStatus := call(
+                    gas(),
+                    caller(),
+                    selfbalance(),
+                    0,
+                    0,
+                    0,
+                    0
+                )
+            }
+        }
+```
+
