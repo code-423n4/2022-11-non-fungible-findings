@@ -88,3 +88,11 @@ index ec27b1d..3ab30c1 100644
          } else if (paymentToken == POOL) {
 ```
 
+### Use openzeppelin/solmate patterns instead of rewrite them
+There are some features that are alreade made, my recommendation its to leverage on this battle test contracts instead of rewrite them.
+
+Exchange.sol is importing a ReentrancyGuard, EIP712 and a MerkleVerifier,  OZ got you cover so you could leverage on this contracts, please take a look to;
+- [ReentrancyGuard](https://docs.openzeppelin.com/contracts/4.x/api/security#ReentrancyGuard)
+- [EIP712](https://docs.openzeppelin.com/contracts/4.x/api/utils#EIP712)
+- [MerkleProof](https://docs.openzeppelin.com/contracts/4.x/api/utils#MerkleProof)
+- And for low level transfers check solmate implementation of [SafeTransferLib](https://github.com/transmissions11/solmate/blob/main/src/utils/SafeTransferLib.sol)
