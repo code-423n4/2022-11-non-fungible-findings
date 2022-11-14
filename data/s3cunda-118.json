@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "s3cunda",
+  "risk": "3",
+  "title": "_returnDust function havent check the caller have receive function or not, which will lead to some eth locked in protocol and take by other users.",
+  "issueId": 118,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/118"
+}
