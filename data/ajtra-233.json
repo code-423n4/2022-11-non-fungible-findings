@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "ajtra",
+  "risk": "3",
+  "title": "_returnDust doesn't check the return value after call",
+  "issueId": 233,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/233"
+}
