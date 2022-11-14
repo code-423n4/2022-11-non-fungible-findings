@@ -36,9 +36,7 @@ https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0
 
 FILE:   2022-11-non-fungible/contracts/Exchange.sol
 
-
-
-    function _returnDust() private {
+function _returnDust() private {
         uint256 _remainingETH = remainingETH;
         assembly {
             if gt(_remainingETH, 0) {
@@ -56,11 +54,24 @@ FILE:   2022-11-non-fungible/contracts/Exchange.sol
     }
 -------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-4)          REQUIRE STAEMENT NOT RETURNED ANY ERROR CODES. WITHOUT ERROR CODES DON'T KNOW WHAT ERROR OCCURS IN THE CONDITION CHECKS 
+4)          REQUIRE STAEMENT NOT REVERTED ANY ERROR CODES. WITHOUT ERROR CODES DON'T KNOW WHAT AND WHY THE ERROR OCCURS  IN THE CONDITION CHECKS 
 
 FILE:  2022-11-non-fungible/contracts/Exchange.sol
 
+There are 4 instances of this issue:
+
 240:   require(sell.order.side == Side.Sell);
+
+573:   require(remainingETH >= price); 
+
+
+2022-11-non-fungible/contracts/Pool.sol
+
+45:    require(_balances[msg.sender] >= amount);
+
+49:     require(success);
+
+
 
 
 --------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -79,7 +90,7 @@ FILE:  2022-11-non-fungible/contracts/Exchange.sol
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-6)  When ever we are using IF ELSEIF condition checks we always need to define the DEFAULT ELSE block. if both IF and ELSEIF condition fails the default else block is executed . This is the best code practice 
+6)              When ever we are using IF ELSEIF condition checks we always need to define the DEFAULT ELSE block. if both IF and ELSEIF condition fails the default else block is executed . This is the best code practice 
 
 FILE:  2022-11-non-fungible/contracts/Exchange.sol
 
@@ -99,16 +110,11 @@ function _validateUserAuthorization(
         } else if (signatureVersion == SignatureVersion.Bulk) {
             /* Bulk-listing authentication: Merkle root of orders signed by trader */
             (bytes32[] memory merklePath) = abi.decode(extraSignature, (bytes32[])); //CODE QUALITY SIVIYARITY FINDINGS 
-
-            bytes32 computedRoot = MerkleVerifier._computeRoot(orderHash, merklePath);
+ bytes32 computedRoot = MerkleVerifier._computeRoot(orderHash, merklePath);
             hashToSign = _hashToSignRoot(computedRoot);
         }
-
-        return _verify(trader, hashToSign, v, r, s);
+ return _verify(trader, hashToSign, v, r, s);
     }
-
-
-
 
 function _validateOracleAuthorization(
         bytes32 orderHash,
@@ -117,8 +123,7 @@ function _validateOracleAuthorization(
         uint256 blockNumber
     ) internal view returns (bool) { 
         bytes32 oracleHash = _hashToSignOracle(orderHash, blockNumber);
-
-        uint8 v; bytes32 r; bytes32 s; 
+ uint8 v; bytes32 r; bytes32 s; 
         if (signatureVersion == SignatureVersion.Single) { 
             assembly {
                 v := calldataload(extraSignature.offset)
@@ -143,8 +148,7 @@ function _validateOracleAuthorization(
             v = _v; r = _r; s = _s;
             */
         }
-
-        return _verify(oracle, oracleHash, v, r, s);
+return _verify(oracle, oracleHash, v, r, s);
     }
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
@@ -157,4 +161,27 @@ FILE:  2022-11-non-fungible/contracts/Exchange.sol
 
 ------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-8)  
+8)          NOT USING THE NAMED RETURN VARIABLES ANYWHERE IN THE FUNCTION IS CONFUSING
+
+FILE:  2022-11-non-fungible/contracts/Exchange.sol
+
+function _canMatchOrders(Order calldata sell, Order calldata buy) 
+        internal
+        view
+        returns (uint256 price, uint256 tokenId, uint256 amount, AssetType assetType)
+    {
+
+
+-----------------------------------------------------------------------------------------------------------------------------------------------------------
+9)              UNWANTED USE OF THE VARIABLE  receiveAmount. INSTEAD ASSIGN price - totalFee VALUE TO  uint256 receiveAmount CAN DIRECTLY 
+                 PASS price - totalFee  IN THE RETURN STAEMENT . IN THIS WAY WE CAN OPTIMIZE OUR CODE . AVOID DECLARING THE receiveAmount 
+                 AMOUNT VARIBALE. THE receiveAmount VARIBALE WE ARE ONLY USING RETURN THE VALUE. NOT NEED THIS 
+
+FILE:  2022-11-non-fungible/contracts/Exchange.sol
+
+PROOF OF CONCEPT :
+
+return (price - totalFee);
+
+
+
