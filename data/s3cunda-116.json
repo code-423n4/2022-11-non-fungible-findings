@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "s3cunda",
+  "risk": "2",
+  "title": "Exchange.execute & bulkExecute function has theft of gas vulnerability",
+  "issueId": 116,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/116"
+}
