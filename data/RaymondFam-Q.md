@@ -54,3 +54,23 @@ Here is the instance entailed:
 
 https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L630-L631
 
+## Function Calls in Loop Could Lead to Denial of Service
+Function calls made in unbounded loop are error-prone with potential resource exhaustion as it can trap the contract due to the gas limitations or failed transactions. Here are some of the instances entailed:
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L184
+
+```
+        for (uint8 i = 0; i < executionsLength; i++) {
+```
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L307
+
+```
+        for (uint8 i = 0; i < orders.length; i++) {
+```
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L598
+
+```
+        for (uint8 i = 0; i < fees.length; i++) {
+```
+
+Consider bounding the loop where possible to avoid unnecessary gas wastage and denial of service.
