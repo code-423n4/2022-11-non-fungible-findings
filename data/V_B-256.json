@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "V_B",
+  "risk": "2",
+  "title": "Incorrect EIP-712 domain separator update",
+  "issueId": 256,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/256"
+}
