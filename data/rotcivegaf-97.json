@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "rotcivegaf",
+  "risk": "2",
+  "title": "The function `_execute` could be called externally",
+  "issueId": 97,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/97"
+}
