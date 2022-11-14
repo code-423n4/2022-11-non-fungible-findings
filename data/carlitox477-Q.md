@@ -1,0 +1,2 @@
+# Exchange#initialize does not check that address(_executionDelegate), address(_policyManager) and _oracle are different from zero address.
+This value lead to failure whenever there is a call to ```executionDelegate```; ```policyManager``` or ```oracle```
