@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "HE1M",
+  "risk": "2",
+  "title": "transfer WETH to address(0) is not forbidden",
+  "issueId": 119,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/119"
+}
