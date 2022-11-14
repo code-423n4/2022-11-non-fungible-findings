@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "carlitox477",
+  "risk": "3",
+  "title": "_returnDust can lock ETH in the contract due to lack of success check",
+  "issueId": 106,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/106"
+}
