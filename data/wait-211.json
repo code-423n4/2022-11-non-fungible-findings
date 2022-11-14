@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "wait",
+  "risk": "3",
+  "title": "Tx should revert when the call in _returnDust failed",
+  "issueId": 211,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/211"
+}
