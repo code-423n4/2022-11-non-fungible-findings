@@ -1,0 +1,1 @@
+In Exchange's setBlockRange() validate input is nonzero. If zero, transactions requiring oracle auth will be prohibited.
