@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "0xNazgul",
+  "risk": "2",
+  "title": "[NAZ-M1] Unchecked Return of `call && delegatecall`",
+  "issueId": 246,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/246"
+}
