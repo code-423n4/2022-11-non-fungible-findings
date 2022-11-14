@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "Trust",
+  "risk": "2",
+  "title": "All orders which use expirationTime == 0 to support oracle cancellation are not executable.",
+  "issueId": 181,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/181"
+}
