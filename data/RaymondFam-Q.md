@@ -79,3 +79,84 @@ Lines in source code are typically limited to 80 characters, but it’s reasonab
 
 https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L230
 
+## Use `delete` to Clear Variables
+`delete a` assigns the initial value for the type to `a`. i.e. for integers it is equivalent to `a = 0`, but it can also be used on arrays, where it assigns a dynamic array of length zero or a static array of the same length with all elements reset. For structs, it assigns a struct with all members reset. Similarly, it can also be used to set an address to zero address. It has no effect on whole mappings though (as the keys of mappings may be arbitrary and are generally unknown). However, individual keys and what they map to can be deleted: If `a` is a mapping, then `delete a[x]` will delete the value stored at x.
+
+The delete key better conveys the intention and is also more idiomatic. Consider replacing assignments of zero and false with delete statements. The instances entailed below could be refactored to:
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L44-L45
+
+```
+        delete remainingETH;
+        delete isInternal;
+```
+## Inadequate NatSpec
+Solidity contracts can use a special form of comments, i.e., the Ethereum Natural Language Specification Format (NatSpec) to provide rich documentation for functions, return variables and more. Please visit the following link for further details:
+
+https://docs.soliditylang.org/en/v0.8.16/natspec-format.html
+
+Here are some of the instances entailed:
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L323-L356
+
+## Use of `uint` Instead of `uint256`
+In `Exchange.sol`, there is an instance of uint, as opposed to uint256. In favor of explicitness, consider replacing this instance of uint with uint256.
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L116
+
+```
+        uint _blockRange
+```
+## Use of `bytes` Instead of `bytes32`
+In `Exchange.sol`, there is an instance of bytes, as opposed to bytes32. In favor of explicitness, consider replacing this instance of bytes with bytes32.
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L447
+
+```
+        bytes calldata extraSignature
+```
+## Comment and Code Mismatch
+The following comment mentioned `Assert` but the code was a `require` statement.
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L290-L291
+
+```
+        /* Assert sender is authorized to cancel order. */
+        require(msg.sender == order.trader);
+```
+## Inadequately Commented Assembly Block
+Assembly block is used in `Exchange.sol`. While this does not pose a security risk per se, it is at the same time a complicated and critical part of the system. Moreover, as this is a low-level language that is harder to parse by readers, consider including extensive documentation regarding the rationale behind its use, clearly explaining what every single assembly instruction does. This will make it easier for users to trust the code, for reviewers to verify it, and for developers to build on top of it or update it. Note that the use of assembly discards several important safety features of Solidity, which may render the code less safe and more error-prone.
+
+Here is one of the instances entailed:
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L214-L226
+
+## Commented Code
+Throughout the codebase `Exchange.sol`, there are lines of code that have been commented out with //. This can lead to confusion and is detrimental to overall code readability. Consider removing commented out lines of code that are no longer needed or replacing them with verbose description.
+
+Here are the instances entailed:
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L176-L181
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L282
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L488
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L499-L501
+
+## Contract Owner Has Too Many Privileges
+The owner of the contracts has too many privileges relative to standard users. The consequence is disastrous if the contract owner's private key has been compromised. And, in the event the key was lost or unrecoverable, no implementation upgrades and system parameter updates will ever be possible.
+
+For a project this grand, it increases the likelihood that the owner will be targeted by an attacker, especially given the insufficient protection on sensitive owner private keys. The concentration of privileges creates a single point of failure; and, here are some of the incidents that could possibly transpire:
+
+Transfer ownership and mess up with all the setter functions, hijacking the entire protocol.
+
+Consider:
+1) splitting privileges (e.g. via the multisig option) to ensure that no one address has excessive ownership of the system,
+2) clearly documenting the functions and implementations the owner can change,
+3) documenting the risks associated with privileged users and single points of failure, and
+4) ensuring that users are aware of all the risks associated with the system.
+
+## Add a Timelock to Critical Parameter Change
+It is a good practice to give time for users to react and adjust to critical changes with a mandatory time window between them. The first step merely broadcasts to users that a particular change is coming, and the second step commits that change after a suitable waiting period. This allows users that do not accept the change to withdraw within the grace period. A timelock provides more guarantees and reduces the level of trust required, thus decreasing risk for users. It also indicates that the project is legitimate (less risk of a malicious Owner making any malicious or ulterior intention). Specifically, privileged roles could use front running to make malicious changes just ahead of incoming transactions, or purely accidental negative effects could occur due to the unfortunate timing of changes.
+
+Consider extending the timelock feature beyond contract ownership management to business critical functions. Here are some of the instances entailed:
+
+https://github.com/code-423n4/2022-11-non-fungible/blob/main/contracts/Exchange.sol#L323-L356
