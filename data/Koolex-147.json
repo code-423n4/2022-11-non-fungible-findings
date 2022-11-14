@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "Koolex",
+  "risk": "3",
+  "title": "Cross-functional re-entrancy resulting in stealing any additional/extra ether sent by the `execute()` 's caller",
+  "issueId": 147,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/147"
+}
