@@ -2,6 +2,11 @@
 
 ## Low
 
+### If `blockRange` is set to 0 or a small value executions will always revert
+The require on line [Exchange.sol#L414](https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0777c8b12e800305d/contracts/Exchange.sol#L414) will always fail if you set to 0 (or will probably always fail with a small value)
+
+Please add a minimum value check on `setBlockRange` function in [Exchange.sol#L354](https://github.com/code-423n4/2022-11-non-fungible/blob/323b7cbf607425dd81da96c0777c8b12e800305d/contracts/Exchange.sol#L354)
+
 ### Unexpected ether in `Pool` can break invariants
 
 Consider the next invariant;
