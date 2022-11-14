@@ -4,10 +4,10 @@
 
 |               | Issue         | Instances     |
 | :-------------: |:-------------|:-------------:|
-| 1      | Use `unchecked` blocks to save gas  |  6 |
-| 2      | `x += y/x -= y` costs more gas than `x = x + y/x = x - y` for state variables  |  7 |
-| 3      | `++i/i++` should be `unchecked{++i}`/`unchecked{i++}` when it is not possible for them to overflow, as in the case when used in for & while loops |  1  |
-| 4      | Functions guaranteed to revert when called by normal users can be marked `payable` |  12 |
+| 1      | Use `unchecked` blocks to save gas  |  4 |
+| 2      | `x += y/x -= y` costs more gas than `x = x + y/x = x - y` for state variables  |   6 |
+| 3      | `++i/i++` should be `unchecked{++i}`/`unchecked{i++}` when it is not possible for them to overflow, as in the case when used in for & while loops |  3  |
+| 4      | Functions guaranteed to revert when called by normal users can be marked `payable` |  6 |
 
 ## Findings
 
