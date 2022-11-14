@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "0xDecorativePineapple",
+  "risk": "2",
+  "title": "A malicious user can steal all the excess balance on the pool by providing calling the execute function wit higher amount of the selling amount",
+  "issueId": 178,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/178"
+}
