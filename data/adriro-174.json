@@ -1,0 +1,8 @@
+{
+  "contest": 181,
+  "handle": "adriro",
+  "risk": "2",
+  "title": "Reentrancy attack can be used to externally call the `_execute` function in the Exchange contract",
+  "issueId": 174,
+  "issueUrl": "https://github.com/code-423n4/2022-11-non-fungible-findings/issues/174"
+}
